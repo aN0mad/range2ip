@@ -17,15 +17,6 @@ def handleDash(ip_data):
     end_ip_arr[3] = end_ip_4oct
     end_ip_ipv4 = ipaddress.IPv4Address(".".join(end_ip_arr))
     ranges = [ipaddr for ipaddr in ipaddress.summarize_address_range(start_ip_ipv4, end_ip_ipv4)]
-    
-    '''
-    addRange = ""
-    for range in ranges:
-        if not isinstance(range, str):
-            if range.network_address == ipaddress.IPv4Address(start_ip) and int(str(range).split("/")[0].split(".")[3]) != 0:
-                addRange = ipaddress.IPv4Network("{0}/32".format(start_ip))
-                ranges.append(ipaddress.IPv4Network("{0}/32".format(start_ip)))
-    '''
 
     range = ranges[0]
     if not isinstance(range, str):
