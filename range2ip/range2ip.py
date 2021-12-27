@@ -96,12 +96,14 @@ def main():
                 if args.verbose: print("    IP found: {0}".format(ip))
                 allIPs.append(ip)
         
+        
         else:
             print("")
             print("-------------------")
-            print("[!] Not a valid range: {0}".format(ip_data))
+            print("[!] Possible not valid range: {0}".format(ip_data))
             print("-------------------")
             print("")
+            allIPs.append(ip_data)
 
     # Write out data
     if args.verbose: print("[+] Writing data to output file {0}".format(file_output))
