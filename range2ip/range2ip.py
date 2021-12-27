@@ -17,7 +17,21 @@ def handleDash(ip_data):
     end_ip_arr[3] = end_ip_4oct
     end_ip_ipv4 = ipaddress.IPv4Address(".".join(end_ip_arr))
     ranges = [ipaddr for ipaddr in ipaddress.summarize_address_range(start_ip_ipv4, end_ip_ipv4)]
+    
+    '''
+    addRange = ""
+    for range in ranges:
+        if not isinstance(range, str):
+            if range.network_address == ipaddress.IPv4Address(start_ip) and int(str(range).split("/")[0].split(".")[3]) != 0:
+                addRange = ipaddress.IPv4Network("{0}/32".format(start_ip))
+                ranges.append(ipaddress.IPv4Network("{0}/32".format(start_ip)))
+    '''
 
+    range = ranges[0]
+    if not isinstance(range, str):
+        if range.network_address == ipaddress.IPv4Address(start_ip) and int(str(range).split("/")[0].split(".")[3]) != 0:
+            addRange = ipaddress.IPv4Network("{0}/32".format(start_ip))
+            ranges.insert(0, addRange)
         
     return ranges
 
@@ -39,7 +53,7 @@ def main():
     # Create command line argument object
     parser = argparse.ArgumentParser(description="Parse CIDRs and IP ranges to single IP addresses", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-r", "--ranges", help="Text file with IP ranges on each line")
-    parser.add_argument("-o", "--output", help="Output file name (.txt is appended)", default=str(datetime.datetime.now().timestamp())+"_output.txt")
+    parser.add_argument("-o", "--output", help="Output file name (.txt is appended)", default=str(datetime.datetime.now().timestamp())+"_output")
     parser.add_argument("-v", "--verbose", help="Print more info", action="store_true")
 
 	# Parse and manage arguments
